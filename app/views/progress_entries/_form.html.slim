@@ -1,0 +1,9 @@
+= form_for @progress_entry do |f|
+  - if @progress_entry.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@progress_entry.errors.count, "error")} prohibited this progress_entry from being saved:"
+      ul
+        - @progress_entry.errors.full_messages.each do |message|
+          li = message
+
+  .actions = f.submit 'Save'

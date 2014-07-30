@@ -1,0 +1,19 @@
+h1 Listing progress_entries
+
+table
+  thead
+    tr
+      th
+      th
+      th
+
+  tbody
+    - @progress_entries.each do |progress_entry|
+      tr
+        td = link_to 'Show', progress_entry
+        td = link_to 'Edit', edit_progress_entry_path(progress_entry)
+        td = link_to 'Destroy', progress_entry, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Progress entry', new_progress_entry_path
