@@ -1,19 +1,23 @@
-h1 Listing progress_entries
+h1 Прогресс
+  
+=line_chart '/results.json', library: { \
+                              height: "400px",
+                              curveType: 'function', 
+                              colors: ["#367055"], 
+                              hAxis: {title: 'Время'}, 
+                              vAxis: {title: "Счет"}, 
+                              backgroundColor: "#CAF2ED", 
+                              legend: 'none'}
 
 table
   thead
     tr
-      th
-      th
-      th
-
+      th Тип
+      th Результат
+      
+  
   tbody
     - @progress_entries.each do |progress_entry|
       tr
-        td = link_to 'Show', progress_entry
-        td = link_to 'Edit', edit_progress_entry_path(progress_entry)
-        td = link_to 'Destroy', progress_entry, data: {:confirm => 'Are you sure?'}, :method => :delete
-
-br
-
-= link_to 'New Progress entry', new_progress_entry_path
+        td =progress_entry.opt.split("").map{|o| o[/\d/] && (o + "-назад") || @options[o]}.join(", ")
+        td =progress_entry.accuracy

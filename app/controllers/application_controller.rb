@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
   end
   
   def show_rules
+    
   end
-   
+  
 end

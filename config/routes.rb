@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
-  root to: redirect('/results')
+  root to: 'application#show_rules'
   
   get '/play', to: 'application#play', as: :play
+  post '/login/:id', to: 'users#login'
   get '/results', to: 'progress_entries#index', as: :show_results
   get '/options', to: 'application#show_options', as: :show_options
   post '/options', to: 'application#save_options', as: :save_options
   get '/leaders', to: 'application#show_leaders', as: :show_leaders
   get '/rules', to: 'application#show_rules', as: :show_rules
-  
+  get '/user', to: 'users#show', as: :user
+  resources :users, only: [:create, :update]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -4,9 +4,39 @@ class ProgressEntriesController < ApplicationController
   # GET /progress_entries
   # GET /progress_entries.json
   def index
-    @progress_entries = ProgressEntry.all
+    if session[:uid].nil?
+      respond_to do |format|
+        format.html {render template: 'layouts/unauthorized_error'}
+        format.json {render json: {error: true}}
+      end
+      return
+    end
+    @user = User.find_by_vk_id(session[:uid])
+    @progress_entries = @user.progress_entries
+    @options = {"s" => "Звук", "p" => "Позиция", "c" => "Цвет", "f" => "Форма"}
+    @score = 0
+    @score_mapping = {}
+    for entry in @progress_entries
+      opts = entry.opt.split("")
+      logger.debug "Opts: " + opts.to_s
+      coeff = opts[0].to_i * (opts.count - 1)
+      logger.debug "Coeff: " + coeff.to_s
+      logger.debug "Accuracy: " + entry.accuracy.to_s
+      @score += entry.accuracy * coeff
+      @score_mapping[entry.created_at] = @score
+    end
+    logger.debug "score_mapping: " + @score_mapping.to_s
+    logger.debug "Score: " + @score.to_s
+    respond_to do |format|
+      format.html
+      format.json {render json: [{name: "Счет", data: @score_mapping}]}
+    end
   end
 
+
+  def data
+    
+  end
   # GET /progress_entries/1
   # GET /progress_entries/1.json
   def show
@@ -69,6 +99,6 @@ class ProgressEntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def progress_entry_params
-      params.require(:progress_entry).permit(:opt,, :accuracy)
+      params.require(:progress_entry).permit(:opt, :accuracy)
     end
 end
