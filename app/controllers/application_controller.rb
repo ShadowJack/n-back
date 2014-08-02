@@ -20,10 +20,15 @@ class ApplicationController < ActionController::Base
   end
   
   def show_leaders
+    @leaders = User.all.order(score: :desc).limit(10)
+    logger.debug "Leaders: " + @leaders.inspect
+    respond_to do |format|
+      format.html {render 'application/show_leaders'}
+      format.json {render json: @leaders}
+    end
   end
   
   def show_rules
-    
   end
   
 end
