@@ -1,0 +1,16 @@
+h1 Лидеры
+
+br
+br
+
+table
+  thead
+    tr
+      th Id
+      th Score
+      
+  tbody
+    -@leaders.each do |leader|
+      tr
+        th =leader.vk_id
+        th =leader.score
