@@ -6,11 +6,15 @@ br
 table
   thead
     tr
-      th Id
-      th Score
+      th Фото
+      th Имя
+      th Фамилия
+      th Счет
       
   tbody
-    -@leaders.each do |leader|
+    -@leaders_info.each do |leader|
       tr
-        th =leader.vk_id
-        th =leader.score
+        th =image_tag leader["photo_50"]
+        th =leader["first_name"]
+        th =leader["last_name"]
+        th =leader["score"]

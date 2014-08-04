@@ -6,6 +6,9 @@ gem 'rails', '4.1.4'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 
+
+# Use vk-ruby as ruby wrapper of vkontakte api
+gem 'vk-ruby'
 # Use chartkick to display charts
 gem 'chartkick'
 # Use slim as template language

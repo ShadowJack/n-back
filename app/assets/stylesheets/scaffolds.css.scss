@@ -106,3 +106,24 @@ div {
   width: 500px;
   height: 580px;
 }
+
+
+.notice {
+  font-size: 16px;
+  background-color: #63CA64;
+  margin: 15px 0px 15px 0px;
+}
+
+.alert {
+  font-size: 16px;
+  background-color: #BC7D81;
+  margin: 15px 0px 15px 0px;
+}
+
+.close-button {
+  float: right;
+  &:hover {
+    background-color: transparent;
+    cursor: pointer;
+  }
+}

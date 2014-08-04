@@ -13,18 +13,19 @@ class ApplicationController < ActionController::Base
   def play
   end
   
-  def show_options
-  end
-  
-  def save_options
-  end
-  
   def show_leaders
     @leaders = User.all.order(score: :desc).limit(10)
     logger.debug "Leaders: " + @leaders.inspect
+    app = VK::Application.new app_id: 4485055, app_secret: 'bTODEWKsNb6ICU1CcrJZ'
+    @leaders_info =  app.users.get user_ids: @leaders.map{|l| l.vk_id.to_s}, fields: ["photo_50"]
+    logger.debug "Leaders: " + @leaders_info.to_s
+    # merge @leaders and leaders_info
+    @leaders_info.each do |leader|
+      leader["score"] = @leaders.select {|l| l.vk_id == leader["uid"]}[0].score
+    end
     respond_to do |format|
       format.html {render 'application/show_leaders'}
-      format.json {render json: @leaders}
+      format.json {render json: @leaders_info}
     end
   end
   

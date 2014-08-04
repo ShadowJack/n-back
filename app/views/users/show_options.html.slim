@@ -1,0 +1,25 @@
+h1 Опции
+
+-if flash[:notice]
+  .notice
+    =flash[:notice]
+    a class="close-button" &times
+-elsif flash[:alert]
+  .alert
+    =flash[:alert]
+    a class="close-button" &times
+
+=form_tag action: 'save_options', method: 'post'
+   =label_tag :nsteps, "Шагов назад:"
+   =select_tag :nsteps, options_for_select([1, 2, 3, 4, 5, 6], @options[:nsteps])
+   h4 Виды признаков:
+   =check_box_tag :sound, "s", @options[:type].include?("s") 
+   =label_tag :sound, "Звук"
+   =check_box_tag :position, "p", @options[:type].include?("p") 
+   =label_tag :position, "Расположение"
+   =check_box_tag :color, "c", @options[:type].include?("c") 
+   =label_tag :color, "Цвет"
+   =check_box_tag :form, "f", @options[:type].include?("f") 
+   =label_tag :form, "Форма"
+   br
+   =submit_tag "Сохранить"

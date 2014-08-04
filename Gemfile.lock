@@ -28,6 +28,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    attr_configurable (0.1.0)
     builder (3.2.2)
     chartkick (1.3.2)
     coffee-rails (4.0.1)
@@ -39,6 +40,10 @@ GEM
     coffee-script-source (1.7.1)
     erubis (2.7.0)
     execjs (2.2.1)
+    faraday (0.8.9)
+      multipart-post (~> 1.2.0)
+    faraday_middleware (0.8.8)
+      faraday (>= 0.7.4, < 0.9)
     hike (1.2.3)
     i18n (0.6.11)
     jbuilder (2.1.3)
@@ -54,6 +59,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.4.0)
     multi_json (1.10.1)
+    multipart-post (1.2.0)
     pg (0.17.1)
     polyglot (0.3.5)
     rack (1.5.2)
@@ -118,6 +124,11 @@ GEM
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    vk-ruby (0.9.4)
+      attr_configurable (~> 0.1.0)
+      faraday (~> 0.8.4)
+      faraday_middleware (~> 0.8.8)
+      multi_json
 
 PLATFORMS
   ruby
@@ -135,3 +146,4 @@ DEPENDENCIES
   spring
   turbolinks
   uglifier (>= 1.3.0)
+  vk-ruby
