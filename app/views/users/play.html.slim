@@ -4,16 +4,9 @@ h1 n-назад
   table
     tbody
       tr
-        td 
-          =button_for_option @options[:type][0]
-        -if @options[:type].count > 1
-          td 
-            =button_for_option @options[:type][1]
-      -if @options[:type].count > 2
-        tr
-          td 
-            =button_for_option @options[:type][2]
-          -if @options[:type].count > 3
-            td 
-              =button_for_option @options[:type][3]
+        td =button_for_option "s", @options[:type]
+        td =button_for_option "p", @options[:type]
+      tr
+        td =button_for_option "f", @options[:type]
+        td =button_for_option "c", @options[:type]
       

@@ -92,7 +92,7 @@ class UsersController < ApplicationController
       end
       return
     end
-    new_options = options_params.values.sort.reverse.join("") #sort as "spfc"
+    new_options = options_params.values[0] + options_params.values[1..-1].sort.reverse.join("") #sort as "spfc"
     logger.debug "Updating options: " + new_options.to_s
     if new_options.length <= 1
       respond_to do |format|
