@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: 'application#show_rules'
   
-  get '/play', to: 'application#play', as: :play
+  get '/play', to: 'users#play', as: :play
   post '/login/:id', to: 'users#login'
   get '/results', to: 'progress_entries#index', as: :show_results
   get '/options', to: 'users#show_options', as: :show_options

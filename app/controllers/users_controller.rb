@@ -1,24 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:save_options, :show_options, :show, :update, :destroy]
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    if @user.nil? 
-      # пытаемся создать пользователя
-      unless session[:uid].nil?
-        @user = User.new(score: 0, options: '2sp', vk_id: session[:uid])
-        @user.save
-      else
-        respond_to do |format|
-          format.json {render json: {error: "Can't find and create user - no uid available"}, status: 401}
-        end
-        return
-      end
-    end
-    logger.debug @user.inspect
-    render json: @user
-  end
+  before_action :set_user, only: [:play, :save_options, :show_options, :show, :update, :destroy]
 
   def login
     params[:id] = params[:id][/\d+/]
@@ -26,6 +7,30 @@ class UsersController < ApplicationController
     logger.debug "Login: " + session[:uid]
     resp = {response: true}
     render json: resp, status: :ok
+  end
+
+  # GET /play
+  def play
+    unless create_user
+      respond_to do |format|
+        format.html {render "layouts/unauthorized_error"}
+        format.json {render json: {error: "Can't find and create user - no uid available"}, status: 401}
+      end
+      return
+    end
+    @options = {nsteps: @user.options.split("")[0].to_i, type: @user.options.split("")[1..-1]}
+    
+  end
+  
+  # GET /users/1
+  # GET /users/1.json
+  def show
+    if create_user
+      logger.debug @user.inspect
+      render json: @user
+    else
+      render json: {error: "User is not logged in!"}, status: :unprocessable_entity
+    end
   end
 
   # POST /users
@@ -44,7 +49,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    if @user.nil?
+    unless create_user
       respond_to do |format|
         format.json {render json: {error: "User is not logged in!"}, status: :unprocessable_entity}
       end
@@ -63,18 +68,12 @@ class UsersController < ApplicationController
 
   # GET /options
   def show_options
-    if @user.nil? 
-      # пытаемся создать пользователя
-      unless session[:uid].nil?
-        @user = User.new(score: 0, options: '2sp', vk_id: session[:uid])
-        @user.save
-      else
-        respond_to do |format|
-          format.html {render "layouts/unauthorized_error"}
-          format.json {render json: {error: "Can't find and create user - no uid available"}, status: 401}
-        end
-        return
+    unless create_user # не нашши и не смогли создать пользователя
+      respond_to do |format|
+        format.html {render "layouts/unauthorized_error"}
+        format.json {render json: {error: "Can't find and create user - no uid available"}, status: 401}
       end
+      return
     end
     @options = {nsteps: @user.options.split("")[0].to_i, type: @user.options.split("")[1..-1]}
     logger.debug "Current user options: " + @options.to_s
@@ -86,15 +85,22 @@ class UsersController < ApplicationController
   
   # POST /options
   def save_options
-    if @user.nil?
+    unless create_user
       respond_to do |format|
         format.html {render "layouts/unauthorized_error"}
         format.json {render json: {error: "Can't find and create user - no uid available"}, status: 401}
       end
       return
     end
-    new_options = options_params.values.join("")
+    new_options = options_params.values.sort.reverse.join("") #sort as "spfc"
     logger.debug "Updating options: " + new_options.to_s
+    if new_options.length <= 1
+      respond_to do |format|
+        format.html {redirect_to "/options", alert: 'Выберите хотя бы один признак!'}
+        format.json {render json: {error: "Unsuccessful options update"}, status: 401}
+      end
+      return
+    end
     respond_to do |format|
       if @user.update(options: new_options)
         format.html { redirect_to "/options", notice: 'Настройки были успешно сохранены.' }
@@ -123,5 +129,18 @@ class UsersController < ApplicationController
     
     def options_params
       params.permit(:nsteps, :color, :position, :sound, :form)
+    end
+    
+    def create_user
+      if @user.nil? 
+        # пытаемся создать пользователя
+        unless session[:uid].nil?
+          @user = User.new(score: 0, options: '2sp', vk_id: session[:uid])
+          @user.save
+        else
+          return false
+        end
+      end
+      true
     end
 end

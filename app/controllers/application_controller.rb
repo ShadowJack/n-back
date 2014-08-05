@@ -9,9 +9,6 @@ class ApplicationController < ActionController::Base
 #   post '/options', to: 'application#save_options', as: :save_options
 #   get '/leaders', to: 'application#show_leaders', as: :show_leaders
 #   get '/rules', to: 'application#show_rules', as: :show_rules
-
-  def play
-  end
   
   def show_leaders
     @leaders = User.all.order(score: :desc).limit(10)

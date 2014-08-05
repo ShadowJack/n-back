@@ -17,9 +17,9 @@ h1 Опции
    =label_tag :sound, "Звук"
    =check_box_tag :position, "p", @options[:type].include?("p") 
    =label_tag :position, "Расположение"
-   =check_box_tag :color, "c", @options[:type].include?("c") 
-   =label_tag :color, "Цвет"
    =check_box_tag :form, "f", @options[:type].include?("f") 
    =label_tag :form, "Форма"
+   =check_box_tag :color, "c", @options[:type].include?("c") 
+   =label_tag :color, "Цвет"
    br
    =submit_tag "Сохранить"

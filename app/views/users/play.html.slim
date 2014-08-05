@@ -1,0 +1,19 @@
+h1 n-назад
+#game_field
+#controls
+  table
+    tbody
+      tr
+        td 
+          =button_for_option @options[:type][0]
+        -if @options[:type].count > 1
+          td 
+            =button_for_option @options[:type][1]
+      -if @options[:type].count > 2
+        tr
+          td 
+            =button_for_option @options[:type][2]
+          -if @options[:type].count > 3
+            td 
+              =button_for_option @options[:type][3]
+      

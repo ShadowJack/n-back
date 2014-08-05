@@ -4,8 +4,6 @@ html
     title NBack
     meta name="viewport" content="width=device-width, initial-scale=1.0"
     = stylesheet_link_tag    "application", media: 'all', 'data-turbolinks-track' => true
-    /javascript:
-    /  var Chartkick = {"language": "ru"};
     = javascript_include_tag "//vk.com/js/api/xd_connection.js?2", 'data-turbolinks-track' => true
     = javascript_include_tag "application", 'data-turbolinks-track' => true
     = javascript_include_tag "//www.google.com/jsapi", "chartkick"
@@ -16,7 +14,7 @@ html
       = yield
     #sidebar
       - items = {"Играть" => play_path,  "Прогресс" => show_results_path,  "Настройки" => show_options_path,  "Лидеры" => show_leaders_path, "Справка" => show_rules_path}
-      h1 Меню
+      h1#menu-title Меню
       menu
         -for k, v in items
           .menu-item
