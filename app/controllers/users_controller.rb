@@ -22,8 +22,8 @@ class UsersController < ApplicationController
     
   end
   
-  # GET /users/1
-  # GET /users/1.json
+  # GET /user
+  # GET /user.json
   def show
     if create_user
       logger.debug @user.inspect

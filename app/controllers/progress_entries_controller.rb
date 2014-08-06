@@ -1,32 +1,26 @@
 class ProgressEntriesController < ApplicationController
   before_action :set_progress_entry, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_user, only: [:index, :create]
   # GET /progress_entries
   # GET /progress_entries.json
   def index
-    if session[:uid].nil?
-      respond_to do |format|
-        format.html {render template: 'layouts/unauthorized_error'}
-        format.json {render json: {error: true}}
-      end
-      return
-    end
-    @user = User.find_by_vk_id(session[:uid])
     @progress_entries = @user.progress_entries
-    @options = {"s" => "Звук", "p" => "Позиция", "c" => "Цвет", "f" => "Форма"}
+    @options = {"s" => "Звук", "p" => "Позиция", "f" => "Форма", "c" => "Цвет"}
     @score = 0
     @score_mapping = {}
     for entry in @progress_entries
-      opts = entry.opt.split("")
-      logger.debug "Opts: " + opts.to_s
-      coeff = opts[0].to_i * (opts.count - 1)
-      logger.debug "Coeff: " + coeff.to_s
-      logger.debug "Accuracy: " + entry.accuracy.to_s
-      @score += entry.accuracy * coeff
+      results = entry.result.split(" ").map{|res| res[1..-1]}
+      coeff = entry.nsteps * (results.count - 1)
+      all = 0
+      right = 0
+      results.each do |res|
+        all += res.split("-")[0].to_i
+        right += res.split("-")[1].to_i
+      end
+      @score += (right * 100 / all).floor * coeff
       @score_mapping[entry.created_at] = @score
+
     end
-    logger.debug "score_mapping: " + @score_mapping.to_s
-    logger.debug "Score: " + @score.to_s
     respond_to do |format|
       format.html
       format.json {render json: [{name: "Счет", data: @score_mapping}]}
@@ -54,8 +48,8 @@ class ProgressEntriesController < ApplicationController
   # POST /progress_entries
   # POST /progress_entries.json
   def create
-    @progress_entry = ProgressEntry.new(progress_entry_params)
-
+    @progress_entry = ProgressEntry.new(progress_entry_params.merge(user_id: @user.id))
+    logger.debug "New progress entry to be created: " + @progress_entry.inspect
     respond_to do |format|
       if @progress_entry.save
         format.html { redirect_to @progress_entry, notice: 'Progress entry was successfully created.' }
@@ -96,9 +90,20 @@ class ProgressEntriesController < ApplicationController
     def set_progress_entry
       @progress_entry = ProgressEntry.find(params[:id])
     end
-
+    
+    def set_user
+      if session[:uid].nil?
+        respond_to do |format|
+          format.html {render template: 'layouts/unauthorized_error'}
+          format.json {render json: {error: true}}
+        end
+        return
+      end
+      @user = User.find_by_vk_id(session[:uid])
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def progress_entry_params
-      params.require(:progress_entry).permit(:opt, :accuracy)
+      params.permit(:result, :nsteps, :user_id)
     end
 end

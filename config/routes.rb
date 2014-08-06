@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/rules', to: 'application#show_rules', as: :show_rules
   get '/user', to: 'users#show', as: :user
   resources :users, only: [:create, :update]
+  resources :progress_entries, only: [:create, :update]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

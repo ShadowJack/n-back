@@ -8,15 +8,19 @@ h1 Прогресс
                               vAxis: {title: "Счет"},  
                               legend: 'none'}
 
-table
+table id="results"
   thead
     tr
-      th Тип
+      th Дата
       th Результат
       
   
   tbody
     - @progress_entries.each do |progress_entry|
       tr
-        td =progress_entry.opt.split("").map{|o| o[/\d/] && (o + "-назад") || @options[o]}.join(", ")
-        td =progress_entry.accuracy
+        td =progress_entry.created_at.strftime "%H:%M %d.%m.%Y"
+        td 
+          =progress_entry.nsteps
+          '-назад
+          =progress_entry.result.split(" ").map{|res| @options[res[0]] + ": " + res.split("-")[1] + " из " + res.split("-")[0][1..-1]}.join(", ")
+          
