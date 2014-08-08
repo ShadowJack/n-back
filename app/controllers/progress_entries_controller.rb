@@ -12,7 +12,7 @@ class ProgressEntriesController < ApplicationController
     counter = 1
     for entry in @progress_entries
       results = entry.result.split(" ").map{|res| res[1..-1]}
-      coeff = entry.nsteps * (results.count - 1)
+      coeff = 1 + entry.nsteps * (results.count - 1)
       all = 0
       right = 0
       results.each do |res|
