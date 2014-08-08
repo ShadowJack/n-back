@@ -1,3 +1,13 @@
+#timebar {
+  width: 200px;
+  height: 10px;
+  background-color: #D1FADC;
+  margin: auto;
+  text-align: center;
+  font-size: 10px;
+  line-height: 10px;
+}
+
 #game_field {
   width: 430px;
   height: 430px;
@@ -25,18 +35,39 @@
       margin: auto;
     }
     
+    .square {
+      background-image: none;
+    }
+    
+    .circle {
+      background-image: url('/img/circle.png');
+    }
+    
+    .triangle {
+      background-image: url('/img/triangle.png');
+    }
+    
+    .pentagon {
+      background-image: url('/img/pentagon.png');
+    }
+    
+    .plus {
+      background-image: url('/img/plus.png');
+    }
   }
+  
   
 }
 
 #controls {
   width: 502px;
   background-color: #CDE5EC;
+  margin-top: -6px;
   
   table {
     width: 100%;
     tr {
-      height: 35px;
+      height: 32px;
     }
     td {
       text-align: center;

@@ -16,7 +16,13 @@ class ProgressEntry < ActiveRecord::Base
         right += res.split("-")[1].to_i
       end
       user = self.user
-      user.score += coeff * (right * 100 / all ).floor
+      accuracy = (right * 100 / all ).floor
+      user.score += coeff * accuracy
+      if accuracy >= 80 && self.nsteps < 6 # поднимаем уровень сложности автоматически
+        user.options = (self.nsteps + 1).to_s + user.options[1..-1]
+      elsif accuracy <= 30 && self.nsteps > 2
+        user.options = (self.nsteps - 1).to_s + user.options[1..-1]
+      end
       user.save
     end
 end

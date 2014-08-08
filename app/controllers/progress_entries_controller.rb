@@ -7,7 +7,9 @@ class ProgressEntriesController < ApplicationController
     @progress_entries = @user.progress_entries
     @options = {"s" => "Звук", "p" => "Позиция", "f" => "Форма", "c" => "Цвет"}
     @score = 0
-    @score_mapping = {}
+    @score_mapping = []
+    @progress_entries_list = []
+    counter = 1
     for entry in @progress_entries
       results = entry.result.split(" ").map{|res| res[1..-1]}
       coeff = entry.nsteps * (results.count - 1)
@@ -18,9 +20,12 @@ class ProgressEntriesController < ApplicationController
         right += res.split("-")[1].to_i
       end
       @score += (right * 100 / all).floor * coeff
-      @score_mapping[entry.created_at] = @score
-
+      @score_mapping.push [counter.to_s, @score, entry.created_at]
+      @progress_entries_list << {entry: entry, counter: counter}
+      counter += 1
     end
+    logger.debug @score_mapping
+    @progress_entries_list = @progress_entries_list.reverse[0..9]
     respond_to do |format|
       format.html
       format.json {render json: [{name: "Счет", data: @score_mapping}]}

@@ -1,4 +1,4 @@
-# глобальными делаем функции, к которым мы должны иметь доступ из коллбэков внутри setInterval
+# глобальными делаем переменные, к которым мы должны иметь доступ из коллбэков внутри setInterval
 resources_loaded = false
 seq = []
 num = 2
@@ -6,7 +6,8 @@ options = []
 game_on = false
 scene_elem = null
 user = null
-
+timebar_width = 0
+times_to_show = 0
 play = ->
   #Если есть поле для игры, то играем
   game_on = false
@@ -23,8 +24,9 @@ play = ->
       num = parseInt options[0]
       options = options[1..-1]
       console.log "Player options: ", options
-      # Генерируем последовательность длиной 20 + nsteps*2
-      seq = generate_sequence(20 + num*2 + options.length*2, options)
+      # Генерируем последовательность длиной 15 + nsteps*2 + opts_len*2
+      times_to_show = 15 + num*2 + options.length*2
+      seq = generate_sequence(times_to_show , options)
       counter = 0
       interval = window.setInterval(->
         if resources_loaded || counter >= 20
@@ -32,6 +34,18 @@ play = ->
           onGameReady()
         counter += 1
       , 100)
+
+# возвращает букву, соответствующую нажатой клавише в нижнем регистре
+getChar = (event) ->
+  if event.which == null #IE
+    if event.keyCode < 32 then return null # спец. символ
+    return (String.fromCharCode event.keyCode).toLowerCase()
+ 
+  if event.which != 0 && (event.charCode != 0 || event.keyCode != 0) # все кроме IE
+    if event.which < 32 then return null
+    return (String.fromCharCode event.which).toLowerCase()
+  return null
+
 
 onGameReady = ->
   console.log "I'm ready to rock!!!"
@@ -43,11 +57,35 @@ onGameReady = ->
   nback_seq_index = -num
   curr_seq_index = 0
   keys_pressed = []
+  
+  show_time = 2000 + 500 * options.length # период показа
+  
+  if $("#timebar").length > 0
+    timebar_width = $("#timebar").width()
+    timer = window.setInterval ->
+      width = $("#timebar").width()
+      $("#timebar").css 'width', (width - 2)
+    , show_time / 100 # из расчета, что убираем по 2 пикселя 100 раз
+  
+  # Key press events
+  $(window).on 'keydown', (e) ->
+    char = getChar e
+    switch char
+      when "s" then keys_pressed.push "s" # звук
+      when "d" then keys_pressed.push "f" # форма
+      when "k" then keys_pressed.push "p" # позиция
+      when "l" then keys_pressed.push "c" # цвет
+      
+    keys_pressed.push (getChar e)
+    console.log "Key pressed: ", (getChar e)
+       
   $(".ctrl-btn").on 'click', (e)->
     keys_pressed.push($(this).prop("value"))
+    
   game_loop = window.setInterval ->
     if !game_on
-      window.clearInterval game_loop 
+      window.clearInterval game_loop
+      window.clearInterval timer 
       return
     nback_seq_elem = (nback_seq_index >= 0 && seq[nback_seq_index] || {})
     if nback_seq_elem != {}
@@ -70,13 +108,12 @@ onGameReady = ->
       onGameEnd(accuracy)
       return
     show_seq_elem(curr_seq_index)
-  , (2000 + 500 * options.length)
+  , show_time
   
 onGameEnd = (acc) ->
   if user == null
     console.log "User is empty!"
     return
-  #TODO: создать новую ProgressEntry и перейти на страницу с результатами
   result = [] # "s6-4 p15-3" -> "s": {all: 6, right: 4}, "p": {all: 15, right: 3}
   for k, v of acc
     result.push(k + v["all"] + "-" + v["right"])
@@ -91,9 +128,15 @@ show_seq_elem = (index) ->
     scene_elem.parentNode.removeChild(scene_elem)
   curr_elem = seq[index]
   scene_elem = document.createElement('div')
-  console.log "Current elem: ", curr_elem 
+  console.log "Current elem: ", curr_elem
+  if options.indexOf("s") != -1
+    curr_elem["s"].play()
   if options.indexOf("f") != -1
     scene_elem.className = curr_elem["f"]
+    img = new Image()
+    img.src = '/img/circle.png'
+    img.src = '/img/triangle.png'
+    img.src = '/img/plus.png'
   else
     scene_elem.className = "square"
   if options.indexOf("c") != -1
@@ -104,8 +147,11 @@ show_seq_elem = (index) ->
     $(curr_elem["p"]).append(scene_elem)
   else
     $("#cell4").append(scene_elem)
-  if options.indexOf("s") != -1
-    curr_elem["s"].play()
+  # восстанавливаем таймбар
+  if $("#timebar").length > 0
+    $("#timebar").css 'width', timebar_width
+    # показываем, сколько раз еще осталось
+    $("#timebar").text (times_to_show - index)
   
 loadAlphabet = (count) ->
   resources = ["А", "Б", "Г", "Е", "И", "Л", "Н", "О", "П", "Р", "С", "Т", "Ю", "Я"].map((val, index, arr) -> "/audio/" + val + ".ogg")
@@ -145,7 +191,7 @@ generate_sequence = (count, options) ->
   if options.indexOf("p") != -1
     positions = ["#cell0", "#cell1", "#cell2", "#cell3", "#cell4", "#cell5", "#cell6", "#cell7", "#cell8"]
   if options.indexOf("f") != -1
-    forms = ["sqare", "circle", "triangle", "pentagon", "plus"]
+    forms = ["square", "circle", "triangle", "pentagon", "plus"]
   if options.indexOf("c") != -1
     colors = ["#A82424", "#DCC028", "#258520", "#14147A", "#7E4631", "#030303", "#03F2FA"]
   
@@ -168,6 +214,9 @@ generate_sequence = (count, options) ->
           when "c" then curr_elem["c"] = seq[i-num]["c"]
     seq.push curr_elem
   seq
+  
+
+
   
 $(document).ready play
 $(document).on "page:load", play
