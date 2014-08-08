@@ -17,6 +17,6 @@ html
       h1#menu-title Меню
       menu
         -for k, v in items
-          .menu-item
-            =link_to k, v
+          - c = (request.original_fullpath == v) &&  "menu-item current" || "menu-item"
+          =link_to k, v, class: c
     

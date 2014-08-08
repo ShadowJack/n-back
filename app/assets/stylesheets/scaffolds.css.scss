@@ -80,21 +80,24 @@ div {
   }
   
   .menu-item {
-    height: 50px;
+    display:block;
+    height: 35px;
+    margin-bottom: 15px;
     width: 100%;
     padding-left: -20px;
-  
-    a {
-      font-size: 20px;
-      color: #315A64;
-      text-decoration: none;
-      &:hover{
-        color: #5CA8AC;
-        background-color: #C3DBDE;
-      }
-    
+
+    font-size: 20px;
+    color: #315A64;
+    text-decoration: none;
+    &:hover {
+      color: #2D4B42;
+      background-color: #C3E1E4;
     }
   
+  }
+  
+  .current {
+    background-color: #B7CCD1;
   }
   
 }
