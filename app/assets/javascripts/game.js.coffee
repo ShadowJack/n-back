@@ -71,10 +71,11 @@ onGameReady = ->
   $(window).on 'keydown', (e) ->
     char = getChar e
     switch char
-      when "s" then keys_pressed.push "s" # звук
-      when "d" then keys_pressed.push "f" # форма
-      when "k" then keys_pressed.push "p" # позиция
-      when "l" then keys_pressed.push "c" # цвет
+      when "s" then $('.ctrl-btn[value="s"]').click()#keys_pressed.push "s" # звук
+      when "d" then $('.ctrl-btn[value="f"]').click()#keys_pressed.push "f" # форма
+      when "k" then $('.ctrl-btn[value="p"]').click()#keys_pressed.push "p" # позиция
+      when "l" then $('.ctrl-btn[value="c"]').click()#keys_pressed.push "c" # цвет
+    
       
     keys_pressed.push (getChar e)
     console.log "Key pressed: ", (getChar e)
@@ -154,7 +155,7 @@ show_seq_elem = (index) ->
     $("#timebar").text (times_to_show - index)
   
 loadAlphabet = (count) ->
-  resources = ["А", "Б", "Г", "Е", "И", "Л", "Н", "О", "П", "Р", "С", "Т", "Ю", "Я"].map((val, index, arr) -> "/audio/" + val + ".ogg")
+  resources = ["А", "Г", "Е", "И", "Л", "Н", "О", "П", "Р", "С", "Т", "Ю", "Я"].map((val, index, arr) -> "/audio/" + val + ".ogg")
   loadedAudioCounter = 0
   res = []
   

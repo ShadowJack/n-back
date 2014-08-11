@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:play, :save_options, :show_options, :show, :update, :destroy]
-
+  skip_before_filter :verify_authenticity_token, :only => [:login]
+  
   def login
-    params[:id] = params[:id][/\d+/]
-    session[:uid] = params[:id]
+    params.permit :id
+    session[:uid] = params[:id][/\d+/]
     logger.debug "Login: " + session[:uid]
     resp = {response: true}
     render json: resp, status: :ok
@@ -115,8 +116,10 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
+      logger.debug "In set_user, session[:uid]=" + session[:uid].to_s
       unless session[:uid].nil?
-        @user = User.find_by vk_id: session[:uid]
+        logger.debug "Searching for player with vk_id " + session[:uid].to_s
+        @user = User.find_by_vk_id session[:uid]
       else
         logger.error "User is not logged in"
       end
