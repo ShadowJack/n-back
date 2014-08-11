@@ -22,10 +22,4 @@ development:
 test:
   <<: *default
   database: nback_test
-
-production:
-  <<: *default
-  database: dfhnnks1h2dllf #fill with production data
-  username: eidlsgepvczomd #fill with production data
-  password: PYxjLnHEqui57jG5CuOwzinuC- #fill with production data
   
