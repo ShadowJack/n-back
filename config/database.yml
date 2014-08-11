@@ -25,7 +25,7 @@ test:
 
 production:
   <<: *default
-  database: nback #fill with production data
-  username: asdasdasd #fill with production data
-  password: asdasdasd #fill with production data
+  database: dfhnnks1h2dllf #fill with production data
+  username: eidlsgepvczomd #fill with production data
+  password: PYxjLnHEqui57jG5CuOwzinuC- #fill with production data
   
