@@ -8,6 +8,8 @@ gem 'rails', '4.1.4'
 gem 'pg'
 
 
+gem 'rails_12factor', group: :production
+
 # Use vk-ruby as ruby wrapper of vkontakte api
 gem 'vk-ruby'
 # Use chartkick to display charts
