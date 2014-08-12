@@ -16,7 +16,7 @@ $(document).ready ->
       # success function
       console.log "Login status: ", status
       console.log "Logged in: ", data
-    VK.Widgets.Like "vk_like", {type: "vertical"}
+    VK.Widgets.Like "vk_like", {type: "mini"}
   , ->
     #onError
     window.top.location = window.top.location
