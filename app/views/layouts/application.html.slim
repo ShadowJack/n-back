@@ -4,7 +4,7 @@ html
     title NBack
     meta name="viewport" content="width=device-width, initial-scale=1.0"
     = stylesheet_link_tag    "application", media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag "//vk.com/js/api/xd_connection.js?2", 'data-turbolinks-track' => true
+    = javascript_include_tag "//vk.com/js/api/xd_connection.js?20", 'data-turbolinks-track' => true
     = javascript_include_tag "application", 'data-turbolinks-track' => true
     = javascript_include_tag "//www.google.com/jsapi", "chartkick"
     = csrf_meta_tags
@@ -25,4 +25,7 @@ html
         -for k, v in items
           - c = (request.original_fullpath == v) &&  "menu-item current" || "menu-item"
           =link_to k, v, class: c
+      
+      #vk_like_container
+        #vk_like
     
