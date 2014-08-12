@@ -8,11 +8,14 @@ scene_elem = null
 user = null
 timebar_width = 0
 times_to_show = 0
+vk_id = ""
+
 play = ->
   #Если есть поле для игры, то играем
   game_on = false
   console.log "Game_on: ", game_on 
   if $("#game_field").length != 0
+    console.log "Location: ", document.location
     vk_id = document.location.search.match(/vk_id=\d+/)[0].slice 6
     console.log "Found #game_field"
     $.get "/user.json?vk_id=" + vk_id, (data, status, xhr) ->
@@ -120,9 +123,9 @@ onGameEnd = (acc) ->
   for k, v of acc
     result.push(k + v["all"] + "-" + v["right"])
   console.log "Posting", result
-  $.post '/progress_entries.json', {nsteps: num, result: result.join(" ")}, (data, response, xhr) ->
+  $.post '/progress_entries.json?vk_id=' + vk_id, {nsteps: num, result: result.join(" ")}, (data, response, xhr) ->
     console.log "saved entry: ", data
-    window.location.replace '/results'
+    window.location.replace '/results?vk_id=' + vk_id
 
 show_seq_elem = (index) ->
   # убираем предыдущий элемент

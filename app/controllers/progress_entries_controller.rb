@@ -116,6 +116,6 @@ class ProgressEntriesController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def progress_entry_params
-      params.permit(:result, :nsteps, :user_id, :vk_id)
+      params.permit(:result, :nsteps, :user_id)
     end
 end
