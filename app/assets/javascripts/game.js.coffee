@@ -13,8 +13,9 @@ play = ->
   game_on = false
   console.log "Game_on: ", game_on 
   if $("#game_field").length != 0
+    vk_id = document.location.search.match(/vk_id=\d+/)[0].slice 6
     console.log "Found #game_field"
-    $.get "/user.json", (data, status, xhr) ->
+    $.get "/user.json?vk_id=" + vk_id, (data, status, xhr) ->
       console.log "From /users.json - data: ", data
       if data.error
         console.log "Something wrong has happend when getting user info: ", data.error

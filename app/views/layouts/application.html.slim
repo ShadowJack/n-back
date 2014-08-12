@@ -13,7 +13,13 @@ html
     #content
       = yield
     #sidebar
-      - items = {"Играть" => play_path,  "Прогресс" => show_results_path,  "Настройки" => show_options_path,  "Лидеры" => show_leaders_path, "Справка" => show_rules_path}
+      -vk_id = params[:viewer_id].nil? && params[:vk_id] || params[:viewer_id]
+      -logger.debug "VK_ID: " + vk_id.to_s
+      - items = {"Играть" => play_path(vk_id: vk_id),
+                "Прогресс" => show_results_path(vk_id: vk_id),
+                "Настройки" => show_options_path(vk_id: vk_id),
+                "Лидеры" => show_leaders_path(vk_id: vk_id),
+                "Справка" => show_rules_path(vk_id: vk_id)}
       h1#menu-title Меню
       menu
         -for k, v in items

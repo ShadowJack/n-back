@@ -21,5 +21,6 @@ h1 Опции
    =label_tag :form, "Форма"
    =check_box_tag :color, "c", @options[:type].include?("c") 
    =label_tag :color, "Цвет"
+   =hidden_field_tag :vk_id, params[:vk_id].to_i
    br
    =submit_tag "Сохранить"

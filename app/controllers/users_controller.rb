@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:play, :save_options, :show_options, :show, :update, :destroy]
-  skip_before_filter :verify_authenticity_token, :only => [:login]
+  skip_before_filter :verify_authenticity_token, :only => [:login, :save_options]
   
   def login
     params.permit :id
@@ -97,17 +97,17 @@ class UsersController < ApplicationController
     logger.debug "Updating options: " + new_options.to_s
     if new_options.length <= 1
       respond_to do |format|
-        format.html {redirect_to "/options", alert: 'Выберите хотя бы один признак!'}
+        format.html {redirect_to show_options_path(vk_id: params[:vk_id]), alert: 'Выберите хотя бы один признак!'}
         format.json {render json: {error: "Unsuccessful options update"}, status: 401}
       end
       return
     end
     respond_to do |format|
       if @user.update(options: new_options)
-        format.html { redirect_to "/options", notice: 'Настройки были успешно сохранены.' }
+        format.html { redirect_to show_options_path(vk_id: params[:vk_id]), notice: 'Настройки были успешно сохранены.' }
         format.json {render json: {options: new_options}, status: :ok}
       else
-        format.html {redirect_to "/options", alert: 'Не удалось сохранить Ваши настройки =('}
+        format.html {redirect_to show_options_path(vk_id: params[:vk_id]), alert: 'Не удалось сохранить Ваши настройки =('}
         format.json {render json: {error: "Unsuccessful options update"}, status: 401}
       end
     end
@@ -117,9 +117,13 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       logger.debug "In set_user, session[:uid]=" + session[:uid].to_s
-      unless session[:uid].nil?
+      logger.debug "In set_user, params[:vk_id]" + params[:vk_id].to_s
+      if not session[:uid].nil?
         logger.debug "Searching for player with vk_id " + session[:uid].to_s
         @user = User.find_by_vk_id session[:uid]
+      elsif not params[:vk_id].nil?
+        logger.debug "Searching for player with vk_id " + params[:vk_id].to_s
+        @user = User.find_by_vk_id params[:vk_id]
       else
         logger.error "User is not logged in"
       end
@@ -137,8 +141,11 @@ class UsersController < ApplicationController
     def create_user
       if @user.nil? 
         # пытаемся создать пользователя
-        unless session[:uid].nil?
+        if not session[:uid].nil?
           @user = User.new(score: 0, options: '2sp', vk_id: session[:uid])
+          @user.save
+        elsif not params[:vk_id].nil?
+          @user = User.new(score: 0, options: '2sp', vk_id: params[:vk_id])
           @user.save
         else
           return false

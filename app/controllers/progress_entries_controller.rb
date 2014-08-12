@@ -24,7 +24,7 @@ class ProgressEntriesController < ApplicationController
       @progress_entries_list << {entry: entry, counter: counter}
       counter += 1
     end
-    logger.debug @score_mapping
+    logger.debug "Score mapping: " + @score_mapping.inspect
     @progress_entries_list = @progress_entries_list.reverse[0..9]
     respond_to do |format|
       format.html
@@ -98,17 +98,24 @@ class ProgressEntriesController < ApplicationController
     
     def set_user
       if session[:uid].nil?
-        respond_to do |format|
-          format.html {render template: 'layouts/unauthorized_error'}
-          format.json {render json: {error: true}}
+        # пытаемся взять uid из параметра
+        if params[:vk_id].nil?
+          respond_to do |format|
+            format.html {render template: 'layouts/unauthorized_error'}
+            format.json {render json: {error: true}}
+          end
+          return
+        else
+          session[:uid] = params[:vk_id]
+          logger.debug "Session[:uid] " + session[:uid]
         end
-        return
       end
       @user = User.find_by_vk_id(session[:uid])
+      logger.debug "Got the user in UserEntries#index: " + @user.inspect
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def progress_entry_params
-      params.permit(:result, :nsteps, :user_id)
+      params.permit(:result, :nsteps, :user_id, :vk_id)
     end
 end

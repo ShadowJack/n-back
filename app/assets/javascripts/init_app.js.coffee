@@ -10,14 +10,12 @@ $(document).ready ->
     VK.addCallback "onApplicationAdded", ->
       $.post '/users.json', {score: 0, options: '2sp', vk_id: uid}
     
-    # при нажатии на одну из кнопок меню логинимся в приложении
-    $(".menu-item").on 'click', (e) ->
-      console.log "Loggin in: ", uid
-      # логинимся под текущим uid
-      $.post '/login/'+ uid + '.json', (data, status, jqXHR) ->
-        # success function 
-        console.log "Login status: ", status
-        console.log "Logged in: ", data
+    console.log "Loggin in: ", uid
+    # логинимся под текущим uid
+    $.post '/login/'+ uid + '.json', (data, status, jqXHR) ->
+      # success function
+      console.log "Login status: ", status
+      console.log "Logged in: ", data
   , ->
     #onError
     window.top.location = window.top.location
