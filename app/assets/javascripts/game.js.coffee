@@ -75,10 +75,30 @@ onGameReady = ->
   $(window).on 'keydown', (e) ->
     char = getChar e
     switch char
-      when "s" then $('.ctrl-btn[value="s"]').click()#keys_pressed.push "s" # звук
-      when "d" then $('.ctrl-btn[value="f"]').click()#keys_pressed.push "f" # форма
-      when "k" then $('.ctrl-btn[value="p"]').click()#keys_pressed.push "p" # позиция
-      when "l" then $('.ctrl-btn[value="c"]').click()#keys_pressed.push "c" # цвет
+      when "s" 
+        keys_pressed.push "s" # звук
+        $('.ctrl-btn[value="s"]').addClass("active")
+        setTimeout ->
+          $('.ctrl-btn[value="s"]').removeClass("active")
+        , 400
+      when "d"
+        keys_pressed.push "f" # форма
+        $('.ctrl-btn[value="f"]').addClass("active")
+        setTimeout ->
+          $('.ctrl-btn[value="f"]').removeClass("active")
+        , 400
+      when "k"
+        keys_pressed.push "p" # позиция
+        $('.ctrl-btn[value="p"]').addClass("active")
+        setTimeout ->
+          $('.ctrl-btn[value="p"]').removeClass("active")
+        , 400
+      when "l"
+        keys_pressed.push "c" # цвет
+        $('.ctrl-btn[value="c"]').addClass("active")
+        setTimeout ->
+          $('.ctrl-btn[value="c"]').removeClass("active")
+        , 400
     
       
     keys_pressed.push (getChar e)
