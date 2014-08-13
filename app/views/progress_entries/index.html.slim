@@ -14,6 +14,7 @@ table id="results"
       th №
       th Дата
       th Результат
+      th 
       
   
   tbody
@@ -25,4 +26,4 @@ table id="results"
           =progress_entry[:entry].nsteps
           '-назад
           =progress_entry[:entry].result.split(" ").map{|res| @options[res[0]] + ": " + res.split("-")[1] + " из " + res.split("-")[0][1..-1]}.join(", ")
-          
+        td class="share-container"

@@ -4,6 +4,7 @@ $(document).ready ->
   set_close_button()
   
   VK.init ->
+    console.log "VK.Share: ", VK.Share
     uid = document.location.search.match(/viewer_id=\d+/)[0].slice 10
     console.log "UID: ", uid
     

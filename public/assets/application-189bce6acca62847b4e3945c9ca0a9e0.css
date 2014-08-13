@@ -1,0 +1,302 @@
+/* line 1, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#timebar {
+  width: 200px;
+  height: 10px;
+  background-color: #D1FADC;
+  margin: auto;
+  text-align: center;
+  font-size: 10px;
+  line-height: 10px;
+}
+
+/* line 11, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#game_field {
+  width: 430px;
+  height: 430px;
+  padding: 10px 10px 10px 10px;
+  margin: auto;
+  margin-bottom: 18px;
+  border: 1px solid #162E2F;
+}
+/* line 19, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#game_field table {
+  table-layout: fixed;
+  width: 100%;
+  height: 100%;
+}
+/* line 24, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#game_field tr {
+  width: 100%;
+}
+/* line 28, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#game_field td {
+  border: 1px solid #327131;
+  height: 137px;
+}
+/* line 32, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#game_field td div {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+}
+/* line 38, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#game_field td .square {
+  background-image: none;
+}
+/* line 42, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#game_field td .circle {
+  background-image: url("/img/circle.png");
+}
+/* line 46, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#game_field td .triangle {
+  background-image: url("/img/triangle.png");
+}
+/* line 50, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#game_field td .pentagon {
+  background-image: url("/img/pentagon.png");
+}
+/* line 54, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#game_field td .plus {
+  background-image: url("/img/plus.png");
+}
+
+/* line 62, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#controls {
+  width: 502px;
+  background-color: #CDE5EC;
+  margin-top: -6px;
+}
+/* line 67, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#controls table {
+  width: 100%;
+}
+/* line 69, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#controls table tr {
+  height: 32px;
+}
+/* line 72, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#controls table td {
+  text-align: center;
+}
+/* line 77, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#controls button {
+  width: 200px;
+  height: 25px;
+  cursor: pointer;
+}
+/* line 83, /Users/admin/Work/NBack/app/assets/stylesheets/game.css.scss */
+#controls .active {
+  font-weight: bold;
+}
+/* line 1, /Users/admin/Work/NBack/app/assets/stylesheets/progress.css.scss */
+#progressChart {
+  width: 500px;
+  height: 400px;
+}
+
+/* line 6, /Users/admin/Work/NBack/app/assets/stylesheets/progress.css.scss */
+#results {
+  width: 100%;
+  border: 1px solid black;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+/* line 13, /Users/admin/Work/NBack/app/assets/stylesheets/progress.css.scss */
+#results thead {
+  background-color: #B2E5D0;
+}
+/* line 17, /Users/admin/Work/NBack/app/assets/stylesheets/progress.css.scss */
+#results td {
+  text-align: center;
+}
+/* line 20, /Users/admin/Work/NBack/app/assets/stylesheets/progress.css.scss */
+#results tr {
+  border: 1px solid black;
+}
+/* line 24, /Users/admin/Work/NBack/app/assets/stylesheets/progress.css.scss */
+#results .share-container {
+  width: 100px;
+}
+/* line 26, /Users/admin/Work/NBack/app/assets/stylesheets/progress.css.scss */
+#results .share-container a:hover {
+  background-color: #E4FDFC;
+}
+/* line 1, /Users/admin/Work/NBack/app/assets/stylesheets/rules.css.scss */
+#rules {
+  width: 100%;
+  height: 560px;
+  overflow-y: auto;
+}
+/* line 1, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 9, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 15, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+/* line 21, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+a {
+  color: #000;
+}
+/* line 23, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+a:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+/* line 30, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+/* line 35, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#notice {
+  color: green;
+}
+
+/* line 39, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+/* line 45, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+/* line 52, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+/* line 62, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+/* line 69, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#sidebar {
+  float: left;
+  margin-left: 10px;
+  width: 230px;
+  height: 580px;
+  background-color: #C3DBDE;
+}
+/* line 76, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#sidebar h1 {
+  padding-left: 20px;
+  margin-bottom: 50px;
+  color: #204539;
+}
+/* line 82, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#sidebar .menu-item {
+  display: block;
+  height: 35px;
+  margin-bottom: 15px;
+  width: 100%;
+  padding-left: -20px;
+  font-size: 20px;
+  color: #315A64;
+  text-decoration: none;
+}
+/* line 92, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#sidebar .menu-item:hover {
+  color: #2D4B42;
+  background-color: #C3E1E4;
+}
+/* line 99, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#sidebar #vk_like_container {
+  position: absolute;
+  bottom: 30px;
+  right: 50px;
+  width: 120px;
+}
+/* line 106, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#sidebar .current {
+  background-color: #B7CCD1;
+}
+
+/* line 114, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#content {
+  float: left;
+  width: 500px;
+  height: 580px;
+}
+
+/* line 121, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+.notice {
+  font-size: 16px;
+  background-color: #63CA64;
+  margin: 15px 0px 15px 0px;
+}
+
+/* line 127, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+.alert {
+  font-size: 16px;
+  background-color: #BC7D81;
+  margin: 15px 0px 15px 0px;
+}
+
+/* line 133, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+.close-button {
+  float: right;
+}
+/* line 135, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+.close-button:hover {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* line 141, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+#menu-title {
+  margin-top: 20px;
+}
+
+/* line 145, /Users/admin/Work/NBack/app/assets/stylesheets/scaffolds.css.scss */
+h1 {
+  margin-top: 0px;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */

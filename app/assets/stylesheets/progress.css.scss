@@ -6,16 +6,25 @@
 #results {
   width: 100%;
   
-  table {
-    border: 1px solid black;
-    border-spacing: 0px;
-    border-collapse: collapse;
+  border: 1px solid black;
+  border-spacing: 0px;
+  border-collapse: collapse;
+
+  thead {
+    background-color: #B2E5D0;
   }
   
   td {
     text-align: center;
   }
   tr {
-    border: 1px solid black;
+    border: 1px solid black;  
+  }
+  
+  .share-container {
+    width: 100px;
+    a:hover {
+      background-color: #E4FDFC;
+    }
   }
 }
