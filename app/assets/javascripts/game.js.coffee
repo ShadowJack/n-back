@@ -142,6 +142,7 @@ show_seq_elem = (index) ->
     img.src = '/img/circle.png'
     img.src = '/img/triangle.png'
     img.src = '/img/plus.png'
+    img.src = '/img/pentagon.png'
   else
     scene_elem.className = "square"
   if options.indexOf("c") != -1
