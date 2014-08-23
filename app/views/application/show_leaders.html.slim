@@ -3,18 +3,19 @@ h1 Лидеры
 br
 br
 
-table
-  thead
-    tr
-      th Фото
-      th Имя
-      th Фамилия
-      th Счет
-      
-  tbody
-    -@leaders_info.each do |leader|
+#leaders_container
+  table
+    thead
       tr
-        th =image_tag leader["photo_50"]
-        th =leader["first_name"]
-        th =leader["last_name"]
-        th =leader["score"]
+        th Фото
+        th Имя
+        th Фамилия
+        th Счет
+      
+    tbody
+      -@leaders_info.each do |leader|
+        tr
+          th =image_tag leader["photo_50"]
+          th =leader["first_name"]
+          th =leader["last_name"]
+          th =leader["score"]
