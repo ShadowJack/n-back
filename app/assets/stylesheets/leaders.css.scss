@@ -1,4 +1,15 @@
 #leaders_container {
   overflow-y: auto;
-  height: 450px;
+  height: 470px;
+  
+  thead {
+    background-color: #B2E5D0;
+  }
+  
+  td {
+    text-align: center;
+  }
+  tr {
+    border: 1px solid black;  
+  }
 }
