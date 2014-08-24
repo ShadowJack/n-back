@@ -8,22 +8,23 @@ h1 Прогресс
                               vAxis: {title: "Счет"},  
                               legend: 'none'}
 
-table id="results"
-  thead
-    tr
-      th №
-      th Дата
-      th Результат
-      th 
+#results_container
+  table id="results"
+    thead
+      tr
+        th №
+        th Дата
+        th Результат
+        th 
       
   
-  tbody
-    - @progress_entries_list.each do |progress_entry|
-      tr
-        td =progress_entry[:counter]
-        td =progress_entry[:entry].created_at.strftime "%d.%m.%Y"
-        td 
-          =progress_entry[:entry].nsteps
-          '-назад
-          =progress_entry[:entry].result.split(" ").map{|res| @options[res[0]] + ": " + res.split("-")[1] + " из " + res.split("-")[0][1..-1]}.join(", ")
-        td class="share-container"
+    tbody
+      - @progress_entries_list.each do |progress_entry|
+        tr
+          td =progress_entry[:counter]
+          td =progress_entry[:entry].created_at.strftime "%d.%m.%Y"
+          td 
+            =progress_entry[:entry].nsteps
+            '-назад
+            =progress_entry[:entry].result.split(" ").map{|res| @options[res[0]] + ": " + res.split("-")[1] + " из " + res.split("-")[0][1..-1]}.join(", ")
+          td class="share-container"

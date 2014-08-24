@@ -25,7 +25,7 @@ class ProgressEntriesController < ApplicationController
       counter += 1
     end
     logger.debug "Score mapping: " + @score_mapping.inspect
-    @progress_entries_list = @progress_entries_list.reverse[0..9]
+    @progress_entries_list = @progress_entries_list.reverse
     respond_to do |format|
       format.html
       format.json {render json: [{name: "Счет", data: @score_mapping}]}
