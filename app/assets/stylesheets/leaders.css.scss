@@ -2,14 +2,20 @@
   overflow-y: auto;
   height: 470px;
   
-  thead {
-    background-color: #B2E5D0;
+  table {
+    width: 500px;
+  
+    thead {
+      background-color: #B2E5D0;
+    }
+  
+    td {
+      text-align: center;
+    }
+    tr {
+      border: 1px solid black;
+    }
+  
   }
   
-  td {
-    text-align: center;
-  }
-  tr {
-    border: 1px solid black;  
-  }
 }
