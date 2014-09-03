@@ -10,8 +10,8 @@ default: &default
   database: nback_development
   pool: 5
   timeout: 5000
-  username: admin
-  password: 123
+  username: shadowjack
+  password: 
 
 development:
   <<: *default
