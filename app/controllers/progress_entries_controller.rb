@@ -31,7 +31,7 @@ class ProgressEntriesController < ApplicationController
     @progress_entries_list = @progress_entries_list.reverse
     respond_to do |format|
       format.html
-      format.json { render json: { name: 'Счет', data: @score_mapping } }
+      format.json { render json: [{ name: 'Счет', data: @score_mapping }] }
     end
   end
 
