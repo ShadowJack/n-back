@@ -13,7 +13,7 @@ vk_id = ""
 play = ->
   #Если есть поле для игры, то играем
   game_on = false
-  console.log "Game_on: ", game_on 
+  console.log "Game_on: ", game_on
   if $("#game_field").length != 0
     console.log "Location: ", document.location
     vk_id = document.location.search.match(/vk_id=\d+/)[0].slice 6
@@ -52,12 +52,11 @@ getChar = (event) ->
 
 
 onGameReady = ->
-  console.log "I'm ready to rock!!!"
   # Поочередно вызываем события и проверяем нажатие пользователем кнопок
   game_on = true
-  accuracy = {} # {"s": {all: 6, right: 4}, "p": {all: 4, right: 3}, ...}
+  accuracy = {} # {"s": {all: 6, right: 4, wrong: 2}, "p": {all: 4, right: 3, wrong: 1}, ...}
   for opt in options
-    accuracy[opt] = {"all": 0, "right": 0}
+    accuracy[opt] = {"all": 0, "right": 0, "wrong": 0}
   nback_seq_index = -num
   curr_seq_index = 0
   keys_pressed = []
@@ -70,50 +69,36 @@ onGameReady = ->
       width = $("#timebar").width()
       $("#timebar").css 'width', (width - 2)
     , show_time / 100 # из расчета, что убираем по 2 пикселя 100 раз
-  
+
   # Key press events
   $(window).on 'keydown', (e) ->
     char = getChar e
-    switch char
-      when "s" 
-        keys_pressed.push "s" # звук
-        $('.ctrl-btn[value="s"]').addClass("active")
-        setTimeout ->
-          $('.ctrl-btn[value="s"]').removeClass("active")
-        , 400
-      when "d"
-        keys_pressed.push "f" # форма
-        $('.ctrl-btn[value="f"]').addClass("active")
-        setTimeout ->
-          $('.ctrl-btn[value="f"]').removeClass("active")
-        , 400
-      when "k"
-        keys_pressed.push "p" # позиция
-        $('.ctrl-btn[value="p"]').addClass("active")
-        setTimeout ->
-          $('.ctrl-btn[value="p"]').removeClass("active")
-        , 400
-      when "l"
-        keys_pressed.push "c" # цвет
-        $('.ctrl-btn[value="c"]').addClass("active")
-        setTimeout ->
-          $('.ctrl-btn[value="c"]').removeClass("active")
-        , 400
-    
-      
-    keys_pressed.push (getChar e)
-    console.log "Key pressed: ", (getChar e)
+    key_to_option_mapping =
+      "s": "s", #звук
+      "d": "f", #форма
+      "k": "p", #позиция
+      "l": "c"  #цвет
+    return if key_to_option_mapping[char] == null || options.indexOf(key_to_option_mapping[char]) == -1
+    keys_pressed.push(key_to_option_mapping[char])
+    $('.ctrl-btn[value="' + key_to_option_mapping[char] + '"]').addClass("active")
+    setTimeout ->
+      $('.ctrl-btn[value="' + key_to_option_mapping[char] + '"]').removeClass("active")
+    , 400
        
   $(".ctrl-btn").on 'click', (e)->
     keys_pressed.push($(this).prop("value"))
-    
+
   game_loop = window.setInterval ->
     if !game_on
       window.clearInterval game_loop
-      window.clearInterval timer 
+      window.clearInterval timer
       return
     nback_seq_elem = (nback_seq_index >= 0 && seq[nback_seq_index] || {})
     if nback_seq_elem != {}
+      # чистим массив нажатых клавиш от дубликатов
+      keys_pressed = keys_pressed.filter (item, pos, self) =>
+        self.indexOf(item) == pos
+
       # проверяем, совпадают ли признаки в текущем элементе и н-назад
       similar = []
       for k,v of nback_seq_elem
@@ -121,8 +106,17 @@ onGameReady = ->
           similar.push(k)
       for o in similar
         accuracy[o]["all"] += 1
-        if keys_pressed.indexOf(o) != -1 # мы нажали правильную кнопку
-          accuracy[o]["right"] += 1  
+      # смотрим все нажатия и определяем правильные и неправильные
+      for key in keys_pressed
+        if similar.indexOf(key) != -1 # мы нажали правильную кнопку
+          accuracy[key]["right"] += 1
+        else
+          accuracy[key]["wrong"] += 1
+    # если ещё не могло быть повторений, но кнопка была нажата, то это ошибка
+    else if keys_pressed.length > 0
+      for k in keys_pressed
+        accuracy[k]["wrong"] += 1
+
     keys_pressed = [] # обнуляем массив нажатых кнопок
     nback_seq_index += 1
     curr_seq_index += 1
@@ -139,10 +133,10 @@ onGameEnd = (acc) ->
   if user == null
     console.log "User is empty!"
     return
-  result = [] # "s6-4 p15-3" -> "s": {all: 6, right: 4}, "p": {all: 15, right: 3}
+  result = [] # "s6-4-5 p15-3-1" -> "s": {all: 6, right: 4, wrong: 5}, "p": {all: 15, right: 3, wrong: 1}
   for k, v of acc
-    result.push(k + v["all"] + "-" + v["right"])
-  console.log "Posting", result
+    result.push(k + v["all"] + "-" + v["right"] + "-" + v["wrong"])
+  console.log "Posting ", result
   $.post '/progress_entries.json?vk_id=' + vk_id, {nsteps: num, result: result.join(" ")}, (data, response, xhr) ->
     console.log "saved entry: ", data
     window.location.replace '/results?vk_id=' + vk_id

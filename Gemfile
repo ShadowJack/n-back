@@ -1,9 +1,13 @@
 source 'https://rubygems.org'
 
-ruby '2.1.2'
+ruby '2.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
+
+# Use puma as an application server
+gem 'puma'
+
 # Use postgres as the database for Active Record
 gem 'pg'
 

@@ -1,5 +1,6 @@
-$(document).ready ->   
+$(document).ready ->
   console.log 'Ready!'
+  document.domain="https://vk.com"
   
   set_close_button()
   

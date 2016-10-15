@@ -14,19 +14,32 @@ class ProgressEntriesController < ApplicationController
     @progress_entries_list = []
     counter = 1
     @progress_entries.each do |entry|
-      results = entry.result.split(' ').map { |res| res[1..-1] }
+      results = entry.result.split(' ')
       coeff = 1 + entry.nsteps * (results.count - 1)
       all = 0
       right = 0
+      wrong = 0
+      description = "#{entry.nsteps}-назад"
       results.each do |res|
-        all += res.split('-')[0].to_i
-        right += res.split('-')[1].to_i
+        results_array = res[1..-1].split('-').map{|x| x.to_i}
+        all += results_array[0]
+        right += results_array[1]
+        description << " #{@options[res[0]]}: #{right} из #{all}"
+        if results_array.length > 2
+          wrong += res.split('-')[2].to_i 
+          description << "(#{wrong} неверно)"
+        end
+        description << ","
       end
-      @score += (right * 100 / all).floor * coeff
+      description = description[0...-1] # remove last ','
+      logger.debug(description)
+      if right > wrong
+        @score += ((right - wrong) * 100 / all).floor * coeff
+      end
       @score_mapping.push [counter.to_s, @score, entry.created_at]
-      @progress_entries_list << { entry: entry, counter: counter }
+      @progress_entries_list << { entry: entry, counter: counter, description: description }
       counter += 1
-    end
+      end
     logger.debug 'Score mapping: ' + @score_mapping.inspect
     @progress_entries_list = @progress_entries_list.reverse
     respond_to do |format|
