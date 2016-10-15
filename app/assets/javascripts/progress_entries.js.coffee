@@ -2,7 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 add_share_buttons = ->
-  document.domain="https://vk.com"
   if $(".share-container").length > 0
     $(".share-container").each (i, elem) ->
       share = VK.Share.button {
