@@ -16,10 +16,11 @@ class ApplicationController < ActionController::Base
       lang: 'ru'
     }, logger: Rails.logger, log_level: :debug, log_format: :curl)
 
-    logger.info(result.body)
     response = JSON.parse(result.body)
+    logger.info(response)
 
-    @leaders_info =  response['response']
+    @leaders_info = response['response']
+    logger.info(response)
 
     # merge @leaders and leaders_info
     @leaders_info.each do |leader|
