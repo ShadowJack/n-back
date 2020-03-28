@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
       lang: 'ru'
     }, logger: Rails.logger, log_level: :debug, log_format: :curl)
 
-    logger.info(result.class)
+    logger.info(result.response.class)
 
     @leaders_info =  result['response']
 
