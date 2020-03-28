@@ -3,7 +3,6 @@ Rails.application.configure do
 
   config.vk_app_id = 4485055
   config.vk_app_secret = 'bTODEWKsNb6ICU1CcrJZ'
-  config.vk_access_token = 'e1a9af2fe1a9af2fe1a9af2f69e1ed02c0ee1a9e1a9af2fbfd6b54e5cf5e7342d443cca'
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
