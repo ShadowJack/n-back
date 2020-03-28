@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     response = HTTParty.get("https://api.vk.com/method/users.get", query: {
       user_ids: @leaders.join(","),
       fields: 'photo_50',
-      access_token: Rails.application.config.vk.access_token,
+      access_token: Rails.application.config.vk[:access_token],
       v: '5.103',
       lang: 'ru'
     })
