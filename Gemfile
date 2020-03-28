@@ -11,6 +11,8 @@ gem 'puma'
 # Use postgres as the database for Active Record
 gem 'pg'
 
+gem 'httparty'
+
 gem 'newrelic_rpm', group: :production
 
 gem 'rails_12factor', group: :production
