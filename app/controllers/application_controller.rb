@@ -17,10 +17,7 @@ class ApplicationController < ActionController::Base
     }, logger: Rails.logger, log_level: :debug, log_format: :curl)
 
     response = JSON.parse(result.body)
-    logger.info(response)
-
     @leaders_info = response['response']
-    logger.info(@leaders_info)
 
     # merge @leaders and leaders_info
     @leaders_info.each do |leader|
