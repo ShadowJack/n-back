@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.2.2'
+ruby '2.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.4'
+gem 'rails', '4.2.0'
 
 # Use puma as an application server
 gem 'puma'
@@ -15,8 +15,8 @@ gem 'newrelic_rpm', group: :production
 
 gem 'rails_12factor', group: :production
 
-# Use vk-ruby as ruby wrapper of vkontakte api
-gem 'vk-ruby'
+gem 'httparty'
+
 # Use chartkick to display charts
 gem 'chartkick'
 # Use slim as template language

@@ -7,9 +7,8 @@ class ApplicationController < ActionController::Base
   # and fetch info about them from vk
   def show_leaders
     @leaders = User.all.order(score: :desc).limit(30)
-    app = VK::Application.new app_id: Rails.application.config.vk_app_id, app_secret: Rails.application.config.vk_app_secret
-    @leaders_info =  app.users.get user_ids: @leaders.map { |l| l.vk_id.to_s },
-                                   fields: ['photo_50'], lang: 'ru'
+
+    @leaders_info =  Vk.get_users(@leaders)
     # merge @leaders and leaders_info
     @leaders_info.each do |leader|
       leader['score'] = @leaders.select { |l| l.vk_id == leader['uid'] }[0].score

@@ -1,11 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # vk app settings
-  config.vk_app_id = ENV["VK_APP_ID"]
-  config.vk_app_secret = ENV["VK_APP_SECRET"]
-
-
   # Code is not reloaded between requests.
   config.cache_classes = true
 
