@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
       access_token: Rails.application.config.vk[:access_token],
       v: '5.103',
       lang: 'ru'
-    })
+    }, logger: Rails.logger, log_level: :debug, log_format: :curl)
     logger.info(response)
 
     @leaders_info =  []
