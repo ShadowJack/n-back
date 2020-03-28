@@ -178,8 +178,6 @@ loadAlphabet = (count) ->
   loadedAudioCounter = 0
   res = []
   
-  #console.log resources
-  
   load_audio = (uri) ->
     audio = new Audio()
     audio.addEventListener 'canplaythrough', onSoundLoaded, false
@@ -219,14 +217,12 @@ generate_sequence = (count, options) ->
     curr_elem = {}
     for opt in options
       if i < num || Math.random() < 1 - 3 / count # генерим любое
-        console.log "Генерируем произвольное"
         switch opt
           when "s" then curr_elem["s"] = sounds[Math.floor(Math.random()*sounds.length)]
           when "p" then curr_elem["p"] = positions[Math.floor(Math.random()*positions.length)]
           when "f" then curr_elem["f"] = forms[Math.floor(Math.random()*forms.length)]
           when "c" then curr_elem["c"] = colors[Math.floor(Math.random()*colors.length)]
       else # генерим правильный ответ
-        console.log "Генерируем правильное"
         switch opt
           when "s" then curr_elem["s"] = seq[i-num]["s"]
           when "p" then curr_elem["p"] = seq[i-num]["p"]
