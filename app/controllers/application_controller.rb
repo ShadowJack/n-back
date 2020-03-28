@@ -8,16 +8,16 @@ class ApplicationController < ActionController::Base
   def show_leaders
     @leaders = User.all.order(score: :desc).limit(30)
 
-    response = HTTParty.get("https://api.vk.com/method/users.get", query: {
-      user_ids: @leaders.join(","),
+    result = HTTParty.get("https://api.vk.com/method/users.get", query: {
+      user_ids: @leaders.map { |l| l.vk_id }.join(","),
       fields: 'photo_50',
       access_token: Rails.application.config.vk[:access_token],
       v: '5.103',
       lang: 'ru'
     }, logger: Rails.logger, log_level: :debug, log_format: :curl)
-    logger.info(response)
 
-    @leaders_info =  []
+    @leaders_info =  result['response']
+
     # merge @leaders and leaders_info
     @leaders_info.each do |leader|
       leader['score'] = @leaders.select { |l| l.vk_id == leader['uid'] }[0].score
