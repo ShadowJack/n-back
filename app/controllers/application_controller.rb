@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
     # merge @leaders and leaders_info
     @leaders_info.each do |leader|
-      leader['score'] = @leaders.select { |l| l.vk_id == leader['uid'] }[0].score
+      leader['score'] = @leaders.select { |l| l.vk_id == leader['id'] }[0].score
     end
     respond_to do |format|
       format.html { render 'application/show_leaders' }
