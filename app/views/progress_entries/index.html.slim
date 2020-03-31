@@ -1,6 +1,6 @@
 h1 Прогресс
   
-=line_chart '/results.json', discrete: true, library: { \
+=line_chart "/results.json?vk_id=#{@user.vk_id}", discrete: true, library: { \
                               height: "400px",
                               curveType: 'function', 
                               colors: ["#367055"], 
