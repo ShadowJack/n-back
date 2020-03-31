@@ -6,7 +6,6 @@ class ProgressEntriesController < ApplicationController
   # GET /progress_entries
   # GET /progress_entries.json
   def index
-    @user = User.find_by_vk_id(169568288)
     @progress_entries = @user.progress_entries
     logger.info @progress_entries.inspect
     @options = { 's' => 'Звук', 'p' => 'Позиция', 'f' => 'Форма', 'c' => 'Цвет' }
